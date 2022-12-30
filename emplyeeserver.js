@@ -16,6 +16,25 @@ next();
 const port = 2410;
 app.listen(port, () => console.log(`Listening on port ${port}!`));
 let {Employees}=require("./wemployee.js")
+app.get('/svr/Employees' ,function(req,res){
+    res.send(Employees)
+})
+app.get("/svr/Employees/department/:department", function (req, res) {
+    let department= req.params.department;
+    let department1 = Employees.filter((st) => st.department === department);
+   console.log(department1)
+    res.send(department1)
+  
+  
+})
+app.get("/svr/Employees/designation/:department", function (req, res) {
+    let department= req.params.department;
+    let department1 = Employees.filter((st) =>st.designation === department);
+   console.log(department1)
+    res.send(department1)
+  
+  
+})
 app.delete("/svr/Employees/:empCode", function (req, res) { 
     let empCode =+req.params.empCode;
   let index = Employees.findIndex((st) => st.empCode === empCode); 
@@ -28,17 +47,8 @@ res.send(deletedEmployees);
   })
 
 
-app.get("/svr/Employees/:department", function (req, res) {
-    let department= req.params.department;
-    let department1 = Employees.filter((st) => st.department === department||st.designation === department);
-   console.log(department1)
-    res.send(department1)
-  
-  
-})
-app.get('/svr/Employees' ,function(req,res){
-    res.send(Employees)
-})
+
+
 app.get('/svr/addEmployees/:empCode' ,function(req,res){
     let empCode= +req.params.empCode;
     let department1 = Employees.find((st) => st.empCode === empCode);
